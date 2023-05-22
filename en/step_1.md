@@ -1,59 +1,78 @@
-## Introduction
+Using <kbd>Shift</kbd> select **all** the parts of your Scene that you want to rotate - including any and the **Planes**.
 
-Add project description here. What will learners be making? Broadly what skills will they be learning?
+Right click and select **Create Empty Parent** - rename the new parent object "Level".
 
-### What you will make
-
---- no-print ---
-Add instructions for interacting with the embedded content here.
-
-<div class="scratch-preview">
-  <iframe allowtransparency="true" width="485" height="402" src="https://scratch.mit.edu/projects/embed/160619869/?autostart=false" frameborder="0"></iframe>
-</div>
---- /no-print ---
-
---- print-only ---
-![Complete project](images/showcase_static.png)
---- /print-only ---
+With the 'Level' GameObject selected add the `TiltFloor` script component. 
 
 --- collapse ---
+
 ---
-title: What you will need
+title: I dont have a TiltWorld script.
 ---
-### Hardware
 
-+ A computer or tablet capable of running Scratch 3
+With 'Level' selected, add a new script component called `TiltFloor`. 
 
-### Software
+Drag the new script file from your Assets into the 'Scripts' folder to organise your files. 
 
-+ Scratch 3 (either [online](https://scratch.mit.edu/){:target="_blank"} or [offline](https://scratch.mit.edu/download){:target="_blank"})
-+ Python 3
-+ This project can be completed in a web browser using [trinket.io](https://trinket.io/)
+Open the new script in your code editor. Type out or copy and paste the following code: 
 
-### Downloads
+--- code ---
+---
+language: cs
+filename: TiltFloor.cs
+line_numbers: true
+line_number_start: 
+line_highlights: 
+---
 
-+ Download the project [starter file](https://rpf.io/p/en/projectName-go){:target="_blank"} if working offline
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TiltFloor : MonoBehaviour
+{
+    public float maxTilt;
+    public float turnSpeed;
+
+    public string forwardKey;
+    public string leftKey;
+    public string backwardKey;
+    public string rightKey;
+
+    // Update is called once per frame
+    void Update()
+    {
+        float targetXRotation = 0;
+        float targetZRotation = 0;
+
+        if (Input.GetKey(forwardKey)){
+            targetXRotation += maxTilt;
+        }
+
+        if (Input.GetKey(backwardKey)){
+            targetXRotation += 360 - maxTilt;
+        }
+
+        if (Input.GetKey(rightKey)){
+            targetZRotation += 360 - maxTilt;
+        }
+
+        if (Input.GetKey(leftKey)){
+            targetZRotation += maxTilt;
+        }
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(targetXRotation, 0, targetZRotation), turnSpeed * Time.deltaTime);
+    }
+}
+
+--- /code ---
+
+Save your script and head back to the Unity editor.
 
 --- /collapse ---
 
---- collapse ---
----
-title: What you will learn
----
+In the Inspector set the 'Max Tilt' variable to `15` and the 'Turn Speed' to `0.5`. 
 
-+ Learning objective 1
-+ Learning objective 2
-+ Learning objective 3
+**Choose** The keys you want to use for the tilting the track. In our example we are using the <kbd>WASD</kbd> layout.
 
---- /collapse ---
-
---- collapse ---
----
-title: Additional information for educators
----
-
-You can download the completed project [here](https://rpf.io/p/en/projectName-get){:target="_blank"}.
-
-If you need to print this project, please use the [printer-friendly version](https://projects.raspberrypi.org/en/projects/projectName/print){:target="_blank"}.
-
---- /collapse ---
+![The TiltFloor component in the Inspector with all the variables set.](images/tilt-floor-component.png)

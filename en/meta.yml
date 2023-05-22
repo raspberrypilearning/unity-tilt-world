@@ -1,11 +1,9 @@
-title: default-project-template
+title: Tilt your level in Unity
 hero_image: images/banner.png
-description: default-project-template description
-version: 4
+description: Create a script to tilt your level
+version: 1
 listed: false
 copyedit: false
-last_tested: "2022-05-19"
+last_tested: "2023-05-22"
 steps:
-  - title: Introduction
-  - title: Step title
-  - title: What next?
+  - title: Create a script to tilt your level
